@@ -52,7 +52,7 @@ const Skills = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-3.5 mb-10">
             {skillsData.workSteps.map((step) => (
               <div key={step.number} className="flex items-start gap-5">
-                <span className="text-4xl font-light text-muted-gray">
+                <span className="shrink-0 tabular-nums text-4xl font-light text-muted-gray">
                   {step.number}
                 </span>
                 <div className="flex flex-col gap-2">
