@@ -177,14 +177,18 @@ const Header = () => {
 
             <MenuItems
               transition
+              modal={false}
               className="absolute right-0 top-full mt-3 w-56 rounded-2xl bg-white border border-border-card p-3 shadow-2xl focus:outline-none transition duration-150 ease-out data-closed:scale-95 data-closed:opacity-0 z-50 flex flex-col gap-1"
             >
               {navItems.map((item) => (
                 <MenuItem key={item.label}>
-                  {({ focus }) => (
+                  {({ focus, close }) => (
                     <a
                       href={item.href}
-                      onClick={(e) => handleNavClick(e, item.label, item.href)}
+                      onClick={(e) => {
+                        handleNavClick(e, item.label, item.href);
+                        close();
+                      }}
                       className={`block rounded-xl px-3.5 py-2 text-sm font-medium transition-colors ${
                         focus || activeItem === item.label
                           ? "bg-bg-sand text-brand-green font-bold"
