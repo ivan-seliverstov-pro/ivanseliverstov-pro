@@ -1,0 +1,78 @@
+@import "tailwindcss";
+
+:root {
+  --background: #efefea;
+  --foreground: #171717;
+  --header-link-color: #757575;
+  --header-link-hover-color: #80985f;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  /* Color Design Tokens */
+  --color-brand-green: #80985f;
+  --color-dark-charcoal: #171717;
+  --color-muted-gray: #757575;
+  --color-light-gray: #b3b3b3;
+  --color-divider-gray: #757575;
+  --color-border-light: #d9d9d9;
+  --color-border-card: #b3b3b3;
+  --color-border-dark: #767676;
+  --color-bg-cream: #f7f6f2;
+  --color-bg-sand: #eae8e1;
+  --color-bg-sand-hover: #dedcd4;
+
+  --font-sans: var(--font-inter), Arial, Helvetica, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+html,
+body {
+  overflow-x: clip;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
+}
+
+.header-link,
+.header-icon {
+  color: var(--header-link-color);
+  font-weight: 400;
+  transition: color 0.15s ease-in-out;
+  text-decoration: none;
+}
+
+.header-link {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-link::after {
+  display: block;
+  content: attr(data-text);
+  font-weight: 700;
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+  user-select: none;
+  pointer-events: none;
+}
+
+.header-link:hover,
+.header-icon:hover {
+  color: var(--header-link-hover-color);
+  font-weight: 700;
+}
+
+.header-link:active,
+.header-link.active {
+  font-weight: 700;
+}
