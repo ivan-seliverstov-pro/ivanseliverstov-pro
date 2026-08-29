@@ -16,7 +16,7 @@ const PROJECT_CASE_IDS = [
   "black-book",
   "conan",
   "irki",
-  "breathe-of-bones",
+  "breath-of-bones",
   "tamagotchi",
   "genius",
   "fanfics",
