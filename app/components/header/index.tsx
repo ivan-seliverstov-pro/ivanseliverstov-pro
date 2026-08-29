@@ -88,8 +88,8 @@ const Header = () => {
 
   return (
     <>
-      <header className="sticky top-0 z-40 w-full border-b border-border-light bg-background/90 backdrop-blur-md py-3 md:py-4 lg:py-4 lg:px-8 px-6 xl:px-12 hidden lg:block">
-        <div className="lg:px-16 mx-auto w-full flex items-center justify-end">
+      <header className="sticky top-0 z-40 w-full border-b border-border-light bg-background/90 backdrop-blur-md py-3 md:py-4 lg:py-4 hidden lg:block">
+        <div className="w-full max-w-332 px-4 md:px-12 lg:px-16 mx-auto flex items-center justify-end">
           <nav className="flex items-center gap-6 lg:gap-8">
             <ul className="flex items-center gap-5 lg:gap-7 text-sm md:text-base">
               {navItems.map((item) => {
