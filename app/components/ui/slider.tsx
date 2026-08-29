@@ -15,6 +15,7 @@ export interface SliderProps {
   prevTooltip?: string;
   nextTooltip?: string;
   arrowOffsetClass?: string;
+  arrowOffsetClassRight?: string;
   enableAutoplay?: boolean;
   autoplayDelay?: number;
   options?: EmblaOptionsType;
@@ -32,7 +33,8 @@ export default function Slider({
   totalSlides,
   prevTooltip = "Назад",
   nextTooltip = "Вперёд",
-  arrowOffsetClass = "md:left-[calc(max(0.5rem,5rem))]",
+  arrowOffsetClass = "md:left-4",
+  arrowOffsetClassRight = "md:right-4",
   enableAutoplay = false,
   autoplayDelay = 5000,
   options = {},
@@ -240,9 +242,6 @@ export default function Slider({
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [scrollPrev, scrollNext]);
 
-  // Right arrow offset calculation from left offset
-  const rightArrowOffsetClass = arrowOffsetClass.replace(/left/g, "right");
-
   return (
     <div ref={containerRef} className={`relative w-full overflow-hidden ${className}`}>
       {/* Prev Arrow */}
@@ -268,7 +267,7 @@ export default function Slider({
       <Tooltip
         content={nextTooltip}
         position="top"
-        className={`hidden md:flex absolute ${rightArrowOffsetClass} right-1 sm:right-2 top-1/2 -translate-y-1/2 z-20`}
+        className={`hidden md:flex absolute ${arrowOffsetClassRight} right-1 sm:right-2 top-1/2 -translate-y-1/2 z-20`}
       >
         <button
           onClick={scrollNext}

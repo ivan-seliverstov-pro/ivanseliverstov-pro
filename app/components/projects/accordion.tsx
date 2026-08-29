@@ -82,7 +82,7 @@ const ProjectAccordion = ({ onSelectProject }: ProjectAccordionProps) => {
                               <h4 className="text-base md:text-2xl font-bold text-dark-charcoal mb-1 md:mb-5 leading-snug">
                                 {item.title}
                               </h4>
-                              <p className="text-[13px] md:text-[15px] text-dark-charcoal mb-1 md:mb-5 leading-relaxed">
+                              <p className="text-[15px] md:text-[15px] text-dark-charcoal mb-1 md:mb-5 leading-relaxed">
                                 {renderFormattedText(item.description)}
                               </p>
                             </div>

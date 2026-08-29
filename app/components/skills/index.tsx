@@ -29,7 +29,7 @@ const Skills = () => {
               <h3 className="text-sm md:text-2xl font-bold text-dark-charcoal mb-2 md:mb-3 leading-snug">
                 {item.title}
               </h3>
-              <p className="text-muted-gray text-[13px] md:text-sm leading-relaxed">
+              <p className="text-muted-gray text-[15px] md:text-sm leading-relaxed">
                 {item.description}
               </p>
             </div>
@@ -59,7 +59,7 @@ const Skills = () => {
                   <h4 className="text-base md:text-2xl font-bold text-dark-charcoal md:leading-10">
                     {renderFormattedText(step.title, 'font-bold text-brand-green hover:no-underline')}
                   </h4>
-                  <p className="text-muted-gray text-[13px] md:text-sm leading-[150%]">
+                  <p className="text-muted-gray text-[15px] md:text-sm leading-[150%]">
                     {renderFormattedText(step.description)}
                   </p>
                 </div>
@@ -72,7 +72,7 @@ const Skills = () => {
               <span className="bg-[#FCD8D8] text-[#D96B6B] text-sm md:text-xl flex items-center font-normal px-3 md:px-4.5 h-6.75 md:h-10.75 rounded-full mb-5">
                 до
               </span>
-              <p className="text-muted-gray text-[13px] md:text-sm leading-[150%]">
+              <p className="text-muted-gray text-[15px] md:text-sm leading-[150%]">
                 {skillsData.beforeAfter.before}
               </p>
             </div>
@@ -80,7 +80,7 @@ const Skills = () => {
               <span className="bg-[#DCEBD2] text-brand-green text-sm md:text-xl flex items-center font-normal px-3 md:px-4.5 h-6.75 md:h-10.75 rounded-full mb-5">
                 после
               </span>
-              <p className="text-muted-gray text-[13px] md:text-sm leading-[150%]">
+              <p className="text-muted-gray text-[15px] md:text-sm leading-[150%]">
                 {renderFormattedText(skillsData.beforeAfter.after)}
               </p>
             </div>

@@ -147,13 +147,13 @@ const Projects = () => {
                       </span>
                     ))}
                   </div>
-                  <div className="space-y-3 sm:space-y-3.5 text-muted-gray text-[13px] sm:text-sm md:text-[15px] leading-relaxed">
+                  <div className="space-y-3 sm:space-y-3.5 text-muted-gray text-[15px] sm:text-sm md:text-[15px] leading-relaxed">
                     {project.description.map((paragraph, pIdx) => (
                       <p key={pIdx}>{renderFormattedText(paragraph)}</p>
                     ))}
                   </div>
                   {project.highlight && (
-                    <p className="text-brand-green font-bold text-xs sm:text-sm md:text-base mt-4 sm:mt-5 md:mt-6 leading-relaxed">
+                    <p className="text-brand-green font-bold text-sm sm:text-sm md:text-base mt-4 sm:mt-5 md:mt-6 leading-relaxed">
                       {project.highlight}
                     </p>
                   )}

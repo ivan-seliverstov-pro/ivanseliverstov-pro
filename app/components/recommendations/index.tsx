@@ -131,7 +131,6 @@ const Recommendations = () => {
         totalSlides={totalSlides}
         prevTooltip="Предыдущая рекомендация"
         nextTooltip="Следующая рекомендация"
-        arrowOffsetClass="md:left-[calc(max(0.5rem,(100vw-1200px)/2-1rem))]"
         enableAutoplay
         options={{ duration: 35 }}
         onInitApi={(api) => {
@@ -160,12 +159,12 @@ const Recommendations = () => {
                     <h3 className="text-base sm:text-xl md:text-2xl font-bold text-dark-charcoal leading-snug mb-0.5 md:mb-1">
                       {reviewer.name}
                     </h3>
-                    <p className="text-xs sm:text-base md:text-xl text-muted-gray leading-normal">
+                    <p className="text-sm sm:text-base md:text-xl text-muted-gray leading-normal">
                       {renderFormattedText(reviewer.role)}
                     </p>
                   </div>
                 </div>
-                <p className="text-[13px] sm:text-sm md:text-[15px] text-muted-gray italic leading-relaxed mb-4 sm:mb-5 md:mb-6">
+                <p className="text-[15px] sm:text-sm md:text-[15px] text-muted-gray italic leading-relaxed mb-4 sm:mb-5 md:mb-6">
                   {reviewer.review}
                 </p>
               </div>

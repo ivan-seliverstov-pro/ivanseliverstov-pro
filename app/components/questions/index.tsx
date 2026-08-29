@@ -92,7 +92,7 @@ const Questions = () => {
                 : "max-h-0 opacity-0"
             }`}
           >
-            <div className="px-4 md:px-8 pb-4 md:pb-6 text-sm sm:text-base text-muted-gray leading-relaxed">
+            <div className="px-4 md:px-8 pb-4 md:pb-6 text-base sm:text-base text-muted-gray leading-relaxed">
               {renderAnswerText()}
             </div>
           </div>

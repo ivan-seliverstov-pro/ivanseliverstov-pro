@@ -42,7 +42,7 @@ const Hero = () => {
               <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-dark-charcoal tracking-tight leading-tight mb-2">
                 {heroData.name}
               </div>
-              <p className="text-[13px] sm:text-lg md:text-xl font-bold leading-snug text-brand-green">
+              <p className="text-[15px] sm:text-lg md:text-xl font-bold leading-snug text-brand-green">
                 {heroData.tagline}
               </p>
             </div>
@@ -56,7 +56,7 @@ const Hero = () => {
                 {heroData.tagline}
               </p>
             </div>
-            <div className="text-muted-gray text-[13px] sm:text-base md:text-lg leading-[150%] space-y-4 lg:max-w-2xl mb-4 sm:mb-6 lg:mb-10">
+            <div className="text-muted-gray text-[15px] sm:text-base md:text-lg leading-[150%] space-y-4 lg:max-w-2xl mb-4 sm:mb-6 lg:mb-10">
               {heroData.bioParagraphs.map((paragraph, index) => (
                 <p key={index}>{renderFormattedText(paragraph)}</p>
               ))}
@@ -105,10 +105,10 @@ const Hero = () => {
               >
                 <div className="shrink-0">{STAT_ICONS[idx]}</div>
                 <div>
-                  <div className="text-xs sm:text-2xl md:text-3xl lg:text-5xl font-semibold leading-none mb-1 md:-mb-1 text-white">
+                  <div className="text-sm sm:text-2xl md:text-3xl lg:text-5xl font-semibold leading-none mb-1 md:-mb-1 text-white">
                     {stat.value}
                   </div>
-                  <div className="text-white/90 text-[10px] sm:text-base md:text-xl lg:text-2xl font-medium">
+                  <div className="text-white/90 text-xs sm:text-base md:text-xl lg:text-2xl font-medium">
                     {stat.label}
                   </div>
                 </div>
