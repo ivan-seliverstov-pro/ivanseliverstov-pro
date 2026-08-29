@@ -60,9 +60,7 @@ export interface Reviewer {
 }
 
 export interface GratitudeItem {
-  /** Полноразмерный скан, открывается в лайтбоксе. */
   src: string;
-  /** Лёгкое превью для карточки. Нет — карточка возьмёт src. */
   thumb?: string;
   alt: string;
 }

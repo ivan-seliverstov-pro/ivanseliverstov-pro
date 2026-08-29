@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import Header from "./components/header";
 import BackToTop from "./components/back-to-top";
@@ -13,10 +13,16 @@ const inter = Inter({
   subsets: ["latin", "cyrillic"],
 });
 
+export const viewport: Viewport = {
+  themeColor: "#efefea",
+  colorScheme: "light",
+};
+
 export const metadata: Metadata = {
   metadataBase: new URL(siteMetadata.domain),
   title: siteMetadata.title,
   description: siteMetadata.description,
+  alternates: { canonical: "/" },
   openGraph: {
     title: siteMetadata.title,
     description: siteMetadata.description,
@@ -26,10 +32,11 @@ export const metadata: Metadata = {
       {
         url: "/images/about/Ivan_Seliverstov.webp",
         width: 1200,
-        height: 630,
+        height: 1261,
         alt: siteMetadata.person.name,
       },
     ],
+    locale: "ru_RU",
     type: "website",
   },
 };
