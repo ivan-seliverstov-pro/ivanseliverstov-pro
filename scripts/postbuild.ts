@@ -2,7 +2,7 @@
  * Чистит статический экспорт от файлов, которые попадать на сайт не должны.
  *
  * Next копирует содержимое public/ в out/ целиком. Так как public/ — отдельный
- * git-репозиторий, вместе с контентом туда уезжают .git и служебные файлы репо.
+ * git-репозиторий, вместе с контентом туда уезжают .git, .gitignore и документация.
  * Публиковать .git нельзя: по /.git/ выкладывается наружу вся история.
  */
 import { readdirSync, rmSync, statSync } from "node:fs";
@@ -10,12 +10,17 @@ import { join } from "node:path";
 
 const OUT = "out";
 
-/** Служебное из контент-репозитория, лежит в корне out/ (см. public/). */
-const REPO_JUNK = [".git", ".gitignore", "README.md"];
+/** Служебные папки контент-репозитория, лежат в корне out/ (см. public/). */
+const REPO_JUNK = [".git", ".gitignore"];
 
-/** Артефакты Next: RSC-payload для клиентской навигации и дефолтная 404. */
-const isNextJunk = (name: string): boolean =>
+/**
+ * Артефакты Next (RSC-payload, дефолтная 404) и документация из контент-репозитория.
+ * Разметку .md сайт не отдаёт никогда, поэтому режем по расширению, а не по именам:
+ * иначе любой новый файл, который владелец положит рядом с контентом, уедет в сборку.
+ */
+const isJunk = (name: string): boolean =>
   name.endsWith(".txt") ||
+  name.endsWith(".md") ||
   name === "404.html" ||
   name === "_not-found.html" ||
   name === "_not-found";
@@ -23,7 +28,7 @@ const isNextJunk = (name: string): boolean =>
 const collect = (dir: string, root = true): string[] =>
   readdirSync(dir, { withFileTypes: true }).flatMap((e) => {
     const path = join(dir, e.name);
-    if (isNextJunk(e.name) || (root && REPO_JUNK.includes(e.name))) return [path];
+    if (isJunk(e.name) || (root && REPO_JUNK.includes(e.name))) return [path];
     return e.isDirectory() ? collect(path, false) : [];
   });
 
