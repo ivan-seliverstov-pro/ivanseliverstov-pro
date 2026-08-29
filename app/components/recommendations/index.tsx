@@ -202,7 +202,7 @@ const Recommendations = () => {
                   >
                     <GlassPlusIcon className="absolute top-2 right-2 z-10 size-8" />
                     <Image
-                      src={item.src}
+                      src={item.thumb ?? item.src}
                       alt={item.alt}
                       fill
                       className="object-cover group-hover:scale-105 transition-transform duration-300"
@@ -220,7 +220,7 @@ const Recommendations = () => {
         open={lightboxOpen}
         close={() => setLightboxOpen(false)}
         index={lightboxIndex}
-        slides={gratitudeImages}
+        slides={gratitudeImages.map(({ src, alt }) => ({ src, alt }))}
         plugins={[Zoom]}
         noScroll={{ disabled: true }}
         render={{
