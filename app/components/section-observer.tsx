@@ -14,6 +14,7 @@ const SECTION_IDS = [
 
 const PROJECT_CASE_IDS = [
   "black-book",
+  "aria",
   "conan",
   "irki",
   "breath-of-bones",
