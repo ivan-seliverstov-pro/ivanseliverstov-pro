@@ -2,6 +2,8 @@
 
 import { useEffect, useRef } from "react";
 
+import { useContent } from "@/app/providers/content-provider";
+
 const SECTION_IDS = [
   "about",
   "skills",
@@ -12,19 +14,10 @@ const SECTION_IDS = [
   "contacts",
 ];
 
-const PROJECT_CASE_IDS = [
-  "black-book",
-  "aria",
-  "conan",
-  "irki",
-  "breath-of-bones",
-  "tamagotchi",
-  "genius",
-  "fanfics",
-  "popcult",
-];
-
-const getTargetElement = (rawHash: string): HTMLElement | null => {
+const getTargetElement = (
+  rawHash: string,
+  caseIds: Set<string>,
+): HTMLElement | null => {
   const clean = rawHash.replace("#", "");
   if (!clean) return null;
 
@@ -35,7 +28,7 @@ const getTargetElement = (rawHash: string): HTMLElement | null => {
     return document.getElementById("recommendations");
   }
 
-  if (clean.startsWith("projects-") || PROJECT_CASE_IDS.includes(clean)) {
+  if (clean.startsWith("projects-") || caseIds.has(clean)) {
     return document.getElementById("projects");
   }
 
@@ -43,8 +36,14 @@ const getTargetElement = (rawHash: string): HTMLElement | null => {
 };
 
 export default function SectionObserver() {
+  const { projectsCasesData } = useContent();
   const activeSectionRef = useRef<string>("");
   const isInitialLoadRef = useRef<boolean>(true);
+  const caseIdsRef = useRef<Set<string>>(new Set());
+
+  useEffect(() => {
+    caseIdsRef.current = new Set(projectsCasesData.map((project) => project.id));
+  }, [projectsCasesData]);
 
   useEffect(() => {
     const loadTimer = setTimeout(() => {
@@ -55,7 +54,7 @@ export default function SectionObserver() {
     const hash = window.location.hash;
     if (hash && hash !== "#") {
       const scrollToHash = () => {
-        const targetElem = getTargetElement(hash);
+        const targetElem = getTargetElement(hash, caseIdsRef.current);
         if (targetElem) {
           targetElem.scrollIntoView({ behavior: "smooth" });
         }
@@ -130,7 +129,7 @@ export default function SectionObserver() {
             }
           } else if (currentId === "projects") {
             const currentHash = window.location.hash.replace("#", "");
-            if (!currentHash.startsWith("projects-") && !PROJECT_CASE_IDS.includes(currentHash)) {
+            if (!currentHash.startsWith("projects-") && !caseIdsRef.current.has(currentHash)) {
               window.history.replaceState(null, "", `#${currentId}`);
             }
           } else {
