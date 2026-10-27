@@ -52,6 +52,9 @@ export default function Slider({
   const isManualRef = useRef(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
+  // Autoplay is only ever turned on by the toggle button; hover/drag just pause it
+  const wantsPlayRef = useRef(false);
+  const isHoveredRef = useRef(false);
 
   const mergedPlugins = React.useMemo(() => {
     const list = [...plugins];
@@ -59,8 +62,11 @@ export default function Slider({
       list.push(
         Autoplay({
           delay: autoplayDelay,
-          stopOnInteraction: false,
-          stopOnMouseEnter: true,
+          // The plugin's own resume handlers (mouseleave, pointerUp, focusout) start
+          // autoplay regardless of the toggle, so pause/resume is handled here instead
+          stopOnInteraction: true,
+          stopOnMouseEnter: false,
+          stopOnFocusIn: false,
           playOnInit: false,
         })
       );
@@ -111,13 +117,6 @@ export default function Slider({
 
                 setTimeout(() => {
                   setHintStyle({});
-                  if (enableAutoplay && emblaApi) {
-                    const autoplay = emblaApi.plugins()?.autoplay;
-                    if (autoplay) {
-                      autoplay.play();
-                      setIsPlaying(true);
-                    }
-                  }
                 }, 400);
               }, 700);
             });
@@ -130,12 +129,22 @@ export default function Slider({
     observer.observe(node);
 
     return () => observer.disconnect();
-  }, [emblaApi, enableAutoplay]);
+  }, []);
+
+  const resumeAutoplay = useCallback(() => {
+    if (!wantsPlayRef.current || isHoveredRef.current) return;
+    emblaApi?.plugins()?.autoplay?.play();
+  }, [emblaApi]);
+
+  const pauseAutoplay = useCallback(() => {
+    emblaApi?.plugins()?.autoplay?.stop();
+  }, [emblaApi]);
 
   const scrollPrev = useCallback(() => {
     if (emblaApi) {
       isManualRef.current = true;
       emblaApi.scrollPrev();
+      emblaApi.plugins()?.autoplay?.reset();
     }
   }, [emblaApi]);
 
@@ -143,6 +152,7 @@ export default function Slider({
     if (emblaApi) {
       isManualRef.current = true;
       emblaApi.scrollNext();
+      emblaApi.plugins()?.autoplay?.reset();
     }
   }, [emblaApi]);
 
@@ -151,23 +161,23 @@ export default function Slider({
       if (emblaApi) {
         isManualRef.current = true;
         emblaApi.scrollTo(index);
+        emblaApi.plugins()?.autoplay?.reset();
       }
     },
     [emblaApi]
   );
 
   const toggleAutoplay = useCallback(() => {
-    const autoplay = emblaApi?.plugins()?.autoplay;
-    if (!autoplay) return;
+    if (!emblaApi?.plugins()?.autoplay) return;
 
-    if (autoplay.isPlaying()) {
-      autoplay.stop();
-      setIsPlaying(false);
+    wantsPlayRef.current = !wantsPlayRef.current;
+    setIsPlaying(wantsPlayRef.current);
+    if (wantsPlayRef.current) {
+      resumeAutoplay();
     } else {
-      autoplay.play();
-      setIsPlaying(true);
+      pauseAutoplay();
     }
-  }, [emblaApi]);
+  }, [emblaApi, resumeAutoplay, pauseAutoplay]);
 
   const onSelect = useCallback(() => {
     if (!emblaApi) return;
@@ -182,14 +192,7 @@ export default function Slider({
     if (onSlideChange) {
       onSlideChange(index, isManual);
     }
-
-    if (enableAutoplay) {
-      const autoplay = emblaApi.plugins()?.autoplay;
-      if (autoplay) {
-        setIsPlaying(autoplay.isPlaying());
-      }
-    }
-  }, [emblaApi, enableAutoplay, onSlideChange]);
+  }, [emblaApi, onSlideChange]);
 
   useEffect(() => {
     if (!emblaApi) return;
@@ -199,6 +202,7 @@ export default function Slider({
     };
 
     emblaApi.on("pointerDown", onPointerDown);
+    emblaApi.on("pointerUp", resumeAutoplay);
     emblaApi.on("select", onSelect);
     emblaApi.on("reInit", onSelect);
 
@@ -209,10 +213,11 @@ export default function Slider({
     return () => {
       cancelAnimationFrame(handle);
       emblaApi.off("pointerDown", onPointerDown);
+      emblaApi.off("pointerUp", resumeAutoplay);
       emblaApi.off("select", onSelect);
       emblaApi.off("reInit", onSelect);
     };
-  }, [emblaApi, onSelect]);
+  }, [emblaApi, onSelect, resumeAutoplay]);
 
   // Keyboard navigation
   useEffect(() => {
@@ -284,7 +289,18 @@ export default function Slider({
 
       {/* Viewport */}
       <div className="w-full">
-        <div className="overflow-hidden px-4 md:px-12 lg:px-16" ref={emblaRef}>
+        <div
+          className="overflow-hidden px-4 md:px-12 lg:px-16"
+          ref={emblaRef}
+          onMouseEnter={() => {
+            isHoveredRef.current = true;
+            pauseAutoplay();
+          }}
+          onMouseLeave={() => {
+            isHoveredRef.current = false;
+            resumeAutoplay();
+          }}
+        >
           <div style={hintStyle} className={`flex ${slideContainerClassName}`}>
             {children}
           </div>
